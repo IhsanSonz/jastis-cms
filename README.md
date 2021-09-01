@@ -1,1 +1,1 @@
-# JASTIS CMS Using React
+# JASTIS CMS Using React Web
