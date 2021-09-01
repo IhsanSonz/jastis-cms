@@ -1,0 +1,17 @@
+.sidebar-item-container {
+    @apply px-3 py-2 rounded-sm mb-0.5 last:mb-0;
+}
+
+.sidebar-item-content {
+    @apply flex flex-grow hover:text-white transition duration-150;
+}
+
+.sidebar-item-icon {
+    @apply flex-shrink-0 h-6 w-6 mr-3;
+}
+
+.sign-in-logo {
+    @apply mt-2;
+    background-color: #f472b6 !important;
+    color: black !important;
+}

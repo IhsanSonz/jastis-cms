@@ -1,8 +1,10 @@
 import React, { useEffect } from 'react';
 import {
+  BrowserRouter as Router,
   Switch,
   Route,
-  useLocation
+  useLocation,
+  Redirect
 } from 'react-router-dom';
 
 import './css/style.scss';
@@ -11,9 +13,14 @@ import { focusHandling } from 'cruip-js-toolkit';
 import './charts/ChartjsConfig';
 
 // Import pages
-import Dashboard from './pages/Dashboard';
+import Auth from './pages/Auth';
+import UserData from './services/UserData';
+import GenericNotFound from './pages/layout/GenericNotFound';
+import Layout from './pages/layout/Layout';
 
 function App() {
+
+  const { token, setToken, setUserData } = UserData();
 
   const location = useLocation();
 
@@ -26,11 +33,22 @@ function App() {
 
   return (
     <>
-      <Switch>
-        <Route exact path="/">
-          <Dashboard />
-        </Route>
-      </Switch>
+      <Router>
+        <Switch>
+          {token ? (
+            <Layout />
+          ) : (
+            <div>
+              <Redirect exact to="/login" />
+              <Route exact path="/login">
+                <Auth setToken={setToken} setUserData={setUserData} />
+              </Route>
+            </div>
+          )}
+          <Route path="/404" component={GenericNotFound} />
+          <Redirect to="/404" />
+        </Switch>
+      </Router>
     </>
   );
 }

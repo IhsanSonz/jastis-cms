@@ -1,25 +1,23 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import Transition from '../../utils/Transition';
 
 import UserAvatar from '../../images/user-avatar-32.png';
+import AuthServices from '../../services/AuthServices';
+import UserData from '../../services/UserData';
+import { setLoading } from '../../redux/ducks/loading';
+import { useDispatch } from 'react-redux';
 
 function UserMenu() {
 
+  const { token, destroyToken, destroyUserData } = UserData();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef(null);
   const dropdown = useRef(null);
+  const dispatch = useDispatch();
 
-  // close on click outside
-  useEffect(() => {
-    const clickHandler = ({ target }) => {
-      if (!dropdownOpen || dropdown.current.contains(target) || trigger.current.contains(target)) return;
-      setDropdownOpen(false);
-    };
-    document.addEventListener('click', clickHandler);
-    return () => document.removeEventListener('click', clickHandler);
-  });
+  const history = useHistory();
 
   // close if the esc key is pressed
   useEffect(() => {
@@ -30,6 +28,24 @@ function UserMenu() {
     document.addEventListener('keydown', keyHandler);
     return () => document.removeEventListener('keydown', keyHandler);
   });
+
+  const logoutHandler = async e => {
+    setDropdownOpen(!dropdownOpen)
+    dispatch(setLoading(true));
+
+    try {
+      const { userLogout } = AuthServices();
+
+      await userLogout(token);
+      destroyToken();
+      destroyUserData();
+
+      history.push('/');
+      history.go(0);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 
   return (
     <div className="relative inline-flex">
@@ -82,7 +98,7 @@ function UserMenu() {
               <Link
                 className="font-medium text-sm text-indigo-500 hover:text-indigo-600 flex items-center py-1 px-3"
                 to="/"
-                onClick={() => setDropdownOpen(!dropdownOpen)}
+                onClick={logoutHandler}
               >
                 Sign Out
               </Link>

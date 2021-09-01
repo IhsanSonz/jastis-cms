@@ -3,10 +3,12 @@ import SearchModal from './header/SearchModal';
 import Notifications from './header/Notifications';
 import Help from './header/Help';
 import UserMenu from './header/UserMenu';
+import MenuIcon from '@material-ui/icons/Menu';
 
 function Header({
   sidebarOpen,
-  setSidebarOpen
+  setSidebarOpen,
+  setLoading
 }) {
   return (
     <header className="sticky top-0 bg-white border-b border-gray-200 z-30">
@@ -24,11 +26,7 @@ function Header({
               onClick={() => setSidebarOpen(!sidebarOpen)}
             >
               <span className="sr-only">Open sidebar</span>
-              <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <rect x="4" y="5" width="16" height="2" />
-                <rect x="4" y="11" width="16" height="2" />
-                <rect x="4" y="17" width="16" height="2" />
-              </svg>
+              <MenuIcon />
             </button>
 
           </div>
@@ -41,7 +39,7 @@ function Header({
             <Help />
             {/*  Divider */}
             <hr className="w-px h-6 bg-gray-200 mx-3" />
-            <UserMenu />
+            <UserMenu setLoading={setLoading} />
 
           </div>
 
