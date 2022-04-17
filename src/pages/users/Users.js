@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
 
-import Datepicker from '../components/actions/Datepicker';
-import FilterButton from '../components/actions/FilterButton';
-import DashboardAvatars from '../components/dashboard/DashboardAvatars';
-import WelcomeBanner from '../components/dashboard/WelcomeBanner';
+import Datepicker from '../../components/actions/Datepicker';
+import FilterButton from '../../components/actions/FilterButton';
+import DashboardAvatars from '../../components/dashboard/DashboardAvatars';
+import WelcomeBanner from '../../components/dashboard/WelcomeBanner';
 import AddIcon from '@material-ui/icons/Add';
-import DashboardCard06 from '../components/dashboard/DashboardCard06';
-import DashboardCard07 from '../components/dashboard/DashboardCard07';
-import DashboardCard08 from '../components/dashboard/DashboardCard08';
-import DashboardCard09 from '../components/dashboard/DashboardCard09';
-import { getAllUsers } from '../redux/ducks/users';
+import DashboardCard06 from '../../components/dashboard/DashboardCard06';
+import DashboardCard07 from '../../components/dashboard/DashboardCard07';
+import DashboardCard08 from '../../components/dashboard/DashboardCard08';
+import DashboardCard09 from '../../components/dashboard/DashboardCard09';
+import { getAllUsers } from '../../redux/ducks/users';
 import { connect } from 'react-redux';
+import { useHistory } from "react-router-dom";
 import {
     Paper,
     Table,
@@ -22,7 +23,7 @@ import {
     Toolbar,
     Typography,
 } from '@material-ui/core';
-import EnhancedTableHead from '../components/table/EnhancedTableHead';
+import EnhancedTableHead from '../../components/table/EnhancedTableHead';
 
 const headCells = [
     { id: '_id', numeric: false, disablePadding: false, label: 'ID' },
@@ -62,6 +63,7 @@ function Users({ users, onLoadData }) {
     const [orderBy, setOrderBy] = useState('name');
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
+    const history = useHistory();
 
     useEffect(() => {
         onLoadData();
@@ -75,6 +77,8 @@ function Users({ users, onLoadData }) {
 
     const handleClick = (event, id) => {
         console.log(`Handle Click with id: ${id}`);
+        history.push(`users/${id}`);
+
     };
 
     const handleChangePage = (event, newPage) => {

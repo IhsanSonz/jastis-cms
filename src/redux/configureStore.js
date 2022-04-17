@@ -3,10 +3,12 @@ import createSagaMiddleware from "@redux-saga/core";
 import loadingReducer from "./ducks/loading";
 import usersReducer from "./ducks/users";
 import { watcherSaga } from "./sagas/rootSaga";
+import userDetailReducer from "./ducks/userDetail";
 
 const reducer = combineReducers({
     loading: loadingReducer,
     users: usersReducer,
+    userDetail: userDetailReducer,
 });
 
 const sagaMiddleware = createSagaMiddleware();

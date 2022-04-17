@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import Header from '../../components/Header'
 import Sidebar from '../../components/sidebar/Sidebar'
 import Dashboard from '../Dashboard';
-import Users from '../Users';
+import Users from '../users/Users';
+import UserDetail from '../users/UserDetail';
 import Classes from '../Classes';
 import { Box, CircularProgress } from '@material-ui/core';
 import Banner from '../../components/Banner';
@@ -38,6 +39,7 @@ function Layout() {
 
                 <Route exact path="/" component={Dashboard} />
                 <Route exact path="/users" component={Users} />
+                <Route exact path="/users/:id" component={UserDetail} />
                 <Route path="/classes" component={Classes} />
                 <Route path="/tasks" component={EnhancedTable} />
                 <Route path="/events" component={Dashboard} />
